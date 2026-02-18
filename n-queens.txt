@@ -1,0 +1,61 @@
+let board = [
+  [false, false, false, false],
+  [false, false, false, false],
+  [false, false, false, false],
+  [false, false, false, false]
+]
+console.log(queens(board,0))
+function queens(board,row){
+    if(row == board.length){
+        display(board)
+        console.log(" ")
+        return 1;
+    }
+    
+    let count = 0
+    
+    for(let col= 0; col<board.length;col++){
+        if(isSafe(board,row,col)){
+            board[row][col] = true
+            count+= queens(board,row + 1)
+            board[row][col] = false
+        }
+    }
+    return count
+}
+
+function isSafe(board, row, col) {
+  // vertical
+  for (let i = 0; i < row; i++) {
+    if (board[i][col]) return false;
+  }
+
+  // left diagonal
+  for (let i = 1; row - i >= 0 && col - i >= 0; i++) {
+    if (board[row - i][col - i]) return false;
+  }
+
+  // right diagonal
+  for (let i = 1; row - i >= 0 && col + i < board.length; i++) {
+    if (board[row - i][col + i]) return false;
+  }
+
+  return true;
+}
+
+function display(board){
+    
+    board.forEach((col) => {
+        let str = ""
+        col.forEach((e)=>{
+            if(e == true){
+                str+="Q "
+            }else{
+                str+="X "
+            }
+        })
+        console.log(str)
+    })
+    
+}
+
